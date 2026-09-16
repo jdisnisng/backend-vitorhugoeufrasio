@@ -27,9 +27,11 @@ let proximoId = 1;
 // de erro quando algo esta errado, ou null quando esta tudo certo.
 // ------------------------------------------------------------
 function validarTreino(corpo) {
+// [PROF] Olha o 'string ' com espaco no final. typeof nunca devolve isso.
 if (typeof corpo.nome !== 'string ' || corpo.nome.trim() === ''){
 return 'O campo nome e obrigatorio e deve ser um texto .';
 }
+// [PROF] Mesmo problema no 'number '.
 if (typeof corpo.duracao !== 'number ' || corpo.duracao <= 0) {
 return 'O campo duracao e obrigatorio e deve ser um numero maior que zero .';
 }
@@ -40,6 +42,7 @@ return null ;
 // ------------------------------------------------------------
 // GET /treinos - lista todos os treinos
 // ------------------------------------------------------------
+// [PROF] Tem espaco dentro da rota. O Express compara letra por letra, entao '/ treinos ' nunca bate com /treinos. Tira todos os espacos de dentro das aspas.
 app.get('/treinos ', (req , res) => {
 res.status(200).json(treinos);
 });
@@ -48,6 +51,7 @@ res.status(200).json(treinos);
 // ------------------------------------------------------------
 // GET /treinos/:id - busca um treino pelo id (404 se nao existir)
 // ------------------------------------------------------------
+// [PROF] Tem espaco dentro da rota. O Express compara letra por letra, entao '/ treinos ' nunca bate com /treinos. Tira todos os espacos de dentro das aspas.
 app.get('/treinos /: id ', (req , res) => {
 const id = Number(req.params.id);
 const treino = treinos.find((t) => t.id === id);
@@ -60,6 +64,7 @@ res.status(200).json(treino);
 // ------------------------------------------------------------
 // POST /treinos - cria um treino (400 se os dados forem invalidos)
 // ------------------------------------------------------------
+// [PROF] Tem espaco dentro da rota. O Express compara letra por letra, entao '/ treinos ' nunca bate com /treinos. Tira todos os espacos de dentro das aspas.
 app.post('/treinos ', (req , res) => {
 const erro = validarTreino(req.body);
 if (erro !== null ){
@@ -79,6 +84,7 @@ res.status(201).json(treino);
 // ------------------------------------------------------------
 // PUT /treinos/:id - substitui um treino
 // ------------------------------------------------------------
+// [PROF] Tem espaco dentro da rota. O Express compara letra por letra, entao '/ treinos ' nunca bate com /treinos. Tira todos os espacos de dentro das aspas.
 app.put('/treinos /: id ', (req , res) => {
 const id = Number(req.params.id);
 const treino = treinos.find((t) => t.id === id);
@@ -98,6 +104,7 @@ res.status(200).json(treino);
 // ------------------------------------------------------------
 // DELETE /treinos/:id - remove um treino
 // ------------------------------------------------------------
+// [PROF] Tem espaco dentro da rota. O Express compara letra por letra, entao '/ treinos ' nunca bate com /treinos. Tira todos os espacos de dentro das aspas.
 app.delete('/treinos /: id ', (req , res) => {
 const id = Number(req.params.id);
 const posicao = treinos.findIndex((t) => t.id === id);
