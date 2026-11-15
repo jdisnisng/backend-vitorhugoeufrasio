@@ -1,34 +1,34 @@
-gitconst service = require('../services/treinosService.js');
-function listar(req, res) {
-    let minimo;
+ const service = require('../services/treinosService.js');
+   function listar(req, res) {
+       let minimo;
 
-    if (req.query.minimo !== undefined) {
+       if (req.query.minimo !== undefined) {
         minimo = Number(req.query.minimo);
 
-        if (!Number.isFinite(minimo)) {
+          if (!Number.isFinite(minimo)) {
             return res.status(400).json({
                 erro: 'O parametro minimo deve ser um numero.'
             });
         }
     }
 
-    const busca = req.query.busca;
+     const busca = req.query.busca;
 
     res.status(200).json(service.listarTodos(minimo, busca));
 }
 
-function contar(req, res) {
+  function contar(req, res) {
     res.status(200).json(service.contarTodos());
 }
 
-function resumo(req, res) {
+  function resumo(req, res) {
     res.status(200).json(service.resumo());
 }
 
-function buscarUm(req, res) {
-    const id = Number(req.params.id);
+  function buscarUm(req, res) {
+      const id = Number(req.params.id);
 
-    if (!Number.isInteger(id)) {
+     if (!Number.isInteger(id)) {
         return res.status(400).json({
             erro: 'O id deve ser um numero inteiro.'
         });
@@ -45,7 +45,7 @@ function buscarUm(req, res) {
     res.status(200).json(treino);
 }
 
-function criar(req, res) {
+  function criar(req, res) {
     const resultado = service.criarTreino(req.body);
 
     if (resultado.erro !== undefined) {
@@ -57,7 +57,7 @@ function criar(req, res) {
     res.status(201).json(resultado.treino);
 }
 
-function atualizar(req, res) {
+  function atualizar(req, res) {
     const id = Number(req.params.id);
 
     const resultado = service.atualizarTreino(id, req.body);
@@ -77,7 +77,7 @@ function atualizar(req, res) {
     res.status(200).json(resultado.treino);
 }
 
-function remover(req, res) {
+  function remover(req, res) {
     const id = Number(req.params.id);
 
     const resultado = service.removerTreino(id);
