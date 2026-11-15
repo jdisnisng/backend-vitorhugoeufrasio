@@ -1,32 +1,31 @@
 const db = require('../banco.js');
+  function listarTodos(minimo, busca) {
+      let sql = 'SELECT * FROM treinos WHERE 1=1';
+      const parametros = [];
 
-function listarTodos(minimo, busca) {
-    let sql = 'SELECT * FROM treinos WHERE 1=1';
-    const parametros = [];
-
-    if (minimo !== undefined) {
+     if (minimo !== undefined) {
         sql += ' AND duracao >= ?';
         parametros.push(minimo);
     }
 
-    if (busca !== undefined && busca !== '') {
+     if (busca !== undefined && busca !== '') {
         sql += ' AND nome LIKE ?';
         parametros.push(`%${busca}%`);
     }
 
-    sql += ' ORDER BY duracao DESC';
+      sql += ' ORDER BY duracao DESC';
 
-    return db.prepare(sql).all(...parametros);
+     return db.prepare(sql).all(...parametros);
 }
 
-function contarTodos() {
-    return db.prepare(
+  function contarTodos() {
+      return db.prepare(
         'SELECT COUNT(*) AS total FROM treinos'
     ).get();
 }
 
-function resumo() {
-    return db.prepare(`
+  function resumo() {
+      return db.prepare(`
         SELECT
             COUNT(*) AS total,
             COALESCE(SUM(duracao), 0) AS minutos,
@@ -35,21 +34,21 @@ function resumo() {
     `).get();
 }
 
-function buscarPorId(id) {
-    return db.prepare(
+  function buscarPorId(id) {
+      return db.prepare(
         'SELECT * FROM treinos WHERE id = ?'
     ).get(id);
 }
 
-function criar(nome, duracao) {
-    const resultado = db.prepare(
+  function criar(nome, duracao) {
+      const resultado = db.prepare(
         'INSERT INTO treinos (nome, duracao) VALUES (?, ?)'
     ).run(nome, duracao);
 
-    return buscarPorId(resultado.lastInsertRowid);
+     return buscarPorId(resultado.lastInsertRowid);
 }
 
-function atualizar(id, nome, duracao) {
+  function atualizar(id, nome, duracao) {
     db.prepare(
         'UPDATE treinos SET nome = ?, duracao = ? WHERE id = ?'
     ).run(nome, duracao, id);
@@ -57,8 +56,8 @@ function atualizar(id, nome, duracao) {
     return buscarPorId(id);
 }
 
-function remover(id) {
-    const resultado = db.prepare(
+  function remover(id) {
+      const resultado = db.prepare(
         'DELETE FROM treinos WHERE id = ?'
     ).run(id);
 
